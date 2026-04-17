@@ -1,0 +1,10 @@
+978-604-2-27001-5|Dế Mèn Phiêu Lưu Ký|Tô Hoài|NXB Kim Đồng|2020|Văn học thiếu nhi|45000.0|5
+978-604-0-06538-2|Số Đỏ|Vũ Trọng Phụng|NXB Văn học|2019|Văn học Việt Nam|55000.0|4
+978-604-1-03314-7|Chiến Tranh Và Hòa Bình|Lev Tolstoy|NXB Hội Nhà Văn|2018|Văn học nước ngoài|120000.0|3
+978-604-2-30012-1|Lập Trình Java Căn Bản|Trần Văn Minh|NXB Thông Tin và Truyền Thông|2021|Công nghệ thông tin|95000.0|6
+978-0-13-468599-1|Clean Code|Robert C. Martin|Prentice Hall|2008|Công nghệ thông tin|180000.0|4
+978-0-20-161622-4|The Pragmatic Programmer|David Thomas|Addison-Wesley|2019|Công nghệ thông tin|175000.0|3
+978-604-0-08821-3|Nhà Giả Kim|Paulo Coelho|NXB Văn học|2022|Văn học nước ngoài|68000.0|7
+978-604-2-26745-9|Tắt Đèn|Ngô Tất Tố|NXB Văn học|2017|Văn học Việt Nam|42000.0|5
+978-0-06-112008-4|To Kill a Mockingbird|Harper Lee|HarperCollins|2002|Văn học nước ngoài|150000.0|3
+978-604-2-31558-3|Kinh Tế Học Đại Cương|Nguyễn Thị Lan|NXB Đại học Quốc gia TP.HCM|2020|Kinh tế|85000.0|8
