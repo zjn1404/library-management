@@ -7,6 +7,9 @@ import org.example.util.FileUtil;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -45,6 +48,7 @@ public class ReaderPanel extends JPanel {
         table.getTableHeader().setReorderingAllowed(false);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         configureColumnWidths();
+        attachCopyMenu(table, 1, "Sao chép mã độc giả");
         add(new JScrollPane(table), BorderLayout.CENTER);
 
         JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 0));
@@ -93,6 +97,34 @@ public class ReaderPanel extends JPanel {
             if (confirm == JOptionPane.YES_OPTION) {
                 readerService.delete(readerId);
                 loadAll();
+            }
+        });
+    }
+
+    private void attachCopyMenu(JTable tbl, int col, String label) {
+        JPopupMenu menu = new JPopupMenu();
+        JMenuItem item = new JMenuItem(label);
+        menu.add(item);
+        item.addActionListener(e -> {
+            int row = tbl.getSelectedRow();
+            if (row < 0) return;
+            String val = tbl.getValueAt(row, col).toString();
+            Toolkit.getDefaultToolkit().getSystemClipboard()
+                    .setContents(new StringSelection(val), null);
+        });
+        tbl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.isPopupTrigger()) show(e);
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) show(e);
+            }
+            private void show(MouseEvent e) {
+                int row = tbl.rowAtPoint(e.getPoint());
+                if (row >= 0) tbl.setRowSelectionInterval(row, row);
+                menu.show(tbl, e.getX(), e.getY());
             }
         });
     }

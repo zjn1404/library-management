@@ -11,6 +11,9 @@ import org.example.util.FileUtil;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -110,6 +113,7 @@ public class StatisticsPanel extends JPanel {
         JTable overdueTable = new JTable(overdueTableModel);
         overdueTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         overdueTable.getTableHeader().setReorderingAllowed(false);
+        attachCopyMenu(overdueTable, 0, "Sao chép mã phiếu", 1, "Sao chép mã độc giả");
 
         JPanel overduePane = new JPanel(new BorderLayout(0, 2));
         JLabel overdueTitle = new JLabel("Danh sách độc giả quá hạn:");
@@ -119,6 +123,41 @@ public class StatisticsPanel extends JPanel {
         card.add(overduePane, BorderLayout.CENTER);
 
         return card;
+    }
+
+    private void attachCopyMenu(JTable tbl, int col1, String label1, int col2, String label2) {
+        JPopupMenu menu = new JPopupMenu();
+        JMenuItem item1 = new JMenuItem(label1);
+        JMenuItem item2 = new JMenuItem(label2);
+        menu.add(item1);
+        menu.add(item2);
+        item1.addActionListener(e -> {
+            int row = tbl.getSelectedRow();
+            if (row < 0) return;
+            Toolkit.getDefaultToolkit().getSystemClipboard()
+                    .setContents(new StringSelection(tbl.getValueAt(row, col1).toString()), null);
+        });
+        item2.addActionListener(e -> {
+            int row = tbl.getSelectedRow();
+            if (row < 0) return;
+            Toolkit.getDefaultToolkit().getSystemClipboard()
+                    .setContents(new StringSelection(tbl.getValueAt(row, col2).toString()), null);
+        });
+        tbl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.isPopupTrigger()) show(e);
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) show(e);
+            }
+            private void show(MouseEvent e) {
+                int row = tbl.rowAtPoint(e.getPoint());
+                if (row >= 0) tbl.setRowSelectionInterval(row, row);
+                menu.show(tbl, e.getX(), e.getY());
+            }
+        });
     }
 
     private JPanel wrap(JLabel label) {
