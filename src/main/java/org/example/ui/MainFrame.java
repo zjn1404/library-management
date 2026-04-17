@@ -24,13 +24,23 @@ public class MainFrame extends JFrame {
         topBar.add(logoutBtn, BorderLayout.EAST);
         add(topBar, BorderLayout.NORTH);
 
+        BookPanel bookPanel = new BookPanel();
+        BorrowListPanel borrowListPanel = new BorrowListPanel();
+
         JTabbedPane tabs = new JTabbedPane();
         tabs.addTab("Độc Giả", new ReaderPanel());
-        tabs.addTab("Sách", new BookPanel());
+        tabs.addTab("Sách", bookPanel);
+        tabs.addTab("Danh Sách Mượn", borrowListPanel);
         tabs.addTab("Mượn Sách", new BorrowPanel());
         tabs.addTab("Trả Sách", new ReturnPanel());
         tabs.addTab("Thống Kê", new StatisticsPanel());
         add(tabs, BorderLayout.CENTER);
+
+        tabs.addChangeListener(e -> {
+            Component selected = tabs.getSelectedComponent();
+            if (selected == bookPanel) bookPanel.refresh();
+            else if (selected == borrowListPanel) borrowListPanel.refresh();
+        });
 
         logoutBtn.addActionListener(e -> {
             int confirm = JOptionPane.showConfirmDialog(this,

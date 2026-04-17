@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.model.Book;
 import org.example.model.BorrowRecord;
 import org.example.util.FileUtil;
 
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 public class BorrowService {
 
     private static final String FILE = "borrows.txt";
+    private final BookService bookService = new BookService();
 
     public List<BorrowRecord> getAll() {
         List<BorrowRecord> records = new ArrayList<>();
@@ -78,6 +80,13 @@ public class BorrowService {
                 r.setStatus("LOST");
                 r.setActualReturnDate(LocalDate.now());
                 saveAll(all);
+                for (String isbn : r.getIsbns()) {
+                    Book b = bookService.findByIsbn(isbn);
+                    if (b != null && b.getQuantity() > 0) {
+                        b.setQuantity(b.getQuantity() - 1);
+                        bookService.update(b);
+                    }
+                }
                 return true;
             }
         }
