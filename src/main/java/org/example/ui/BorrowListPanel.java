@@ -102,8 +102,10 @@ public class BorrowListPanel extends JPanel {
         JPopupMenu menu = new JPopupMenu();
         JMenuItem copyBorrowId = new JMenuItem("Sao chép mã phiếu");
         JMenuItem copyReaderId = new JMenuItem("Sao chép mã độc giả");
+        JMenuItem copyIsbn = new JMenuItem("Sao chép mã sách");
         menu.add(copyBorrowId);
         menu.add(copyReaderId);
+        menu.add(copyIsbn);
 
         copyBorrowId.addActionListener(e -> {
             int row = table.getSelectedRow();
@@ -116,6 +118,12 @@ public class BorrowListPanel extends JPanel {
             if (row < 0) return;
             Toolkit.getDefaultToolkit().getSystemClipboard()
                     .setContents(new StringSelection(table.getValueAt(row, 2).toString()), null);
+        });
+        copyIsbn.addActionListener(e -> {
+            int row = table.getSelectedRow();
+            if (row < 0) return;
+            Toolkit.getDefaultToolkit().getSystemClipboard()
+                    .setContents(new StringSelection(table.getValueAt(row, 8).toString()), null);
         });
 
         table.addMouseListener(new MouseAdapter() {
